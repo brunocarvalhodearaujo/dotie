@@ -1,6 +1,6 @@
 {
   "name": "dotie",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "tiny, powerful dependency injection container for node and browser",
   "main": "dist/dotie.js",
   "license": "MIT",
