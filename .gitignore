@@ -1,1 +1,10 @@
-/node_modules
+# folders
+/.idea/*
+/node_modules/*
+/bower_components/*
+
+# files
+*.log*
+*.DS_Store
+*._*
+*.iml

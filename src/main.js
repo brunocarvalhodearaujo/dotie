@@ -1,7 +1,7 @@
 import { Container } from './container'
 
 if (typeof window !== 'undefined') {
-  window.bridge = window.bridge || new Container()
-} else {
-  module.exports = new Container()
+  window.bridge = new Container()
 }
+
+export default new Container()
