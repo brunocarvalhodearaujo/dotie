@@ -1,6 +1,6 @@
 {
   "name": "dotie",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "tiny, powerful dependency injection container for node and browser",
   "main": "lib/main.js",
   "license": "MIT",
