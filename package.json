@@ -17,6 +17,7 @@
   "scripts": {
     "test": "jshint . && mocha --compilers js:babel-register ./test/**/*.spec.js",
     "build": "babel src -d lib && gulp",
+    "postinstall": "npm run build",
     "prepublish": "npm run build"
   },
   "devDependencies": {

@@ -23,7 +23,7 @@ $ bower install dotie # if you want to use this package in the browser
 * NodeJS (CommonJS/Browserify)
 
 `````js
-const dotie = require('dotie') // default style
+const { Container } = require('dotie') // default style
 import { Container } from 'dotie' // es6 style
 ````
 
