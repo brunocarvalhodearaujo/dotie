@@ -48,6 +48,24 @@ dotie
       return q.promise()
     }
   })
+
+// or use jquery sintax, remember dotie interop window an $ of jquery
+
+/**
+ * @description register
+ * @param {string} key
+ * @param {any} value
+ */
+ $.dotie(key, value)
+
+// example
+$.dotie('http', function(q) {
+  return (...params) => {
+    ...
+    return q.promise()
+  }
+})
+
 ````
 
 retrieve an dependence into an container
@@ -58,6 +76,19 @@ const $http = dotie.resolve('http')
 $http('https://npmjs.com')
   .then(data => console.log(data))
   .error(error => console.log(error))
+
+// or use jquery sintax, remember dotie interop window an $ of jquery
+
+/**
+ * @description resolve
+ * @param {string} key
+ * @returns {any}
+ */
+ $.dotie(key)
+
+$.dotie('http')('https://npmjs.com')
+  ...
+
 ````
 
 - this example of register|resolve consider uses browser and jquery
