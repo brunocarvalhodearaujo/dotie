@@ -1,8 +1,8 @@
 import { Container } from './container'
 
 if (typeof window !== 'undefined') {
-  window.bridge = new Container()
+  window.dotie = Container
 }
 
 export { Container }
-export default new Container()
+export default Container

@@ -162,11 +162,13 @@
         Object.defineProperty(exports, "__esModule", {
             value: true
         });
+        exports.Container = undefined;
         var _container = require("./container");
         if (typeof window !== "undefined") {
-            window.bridge = new _container.Container();
+            window.dotie = _container.Container;
         }
-        exports.default = new _container.Container();
+        exports.Container = _container.Container;
+        exports.default = _container.Container;
     }, {
         "./container": 2
     } ],
