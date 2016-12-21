@@ -1,8 +1,8 @@
 {
   "name": "dotie",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "tiny, powerful dependency injection container for node and browser",
-  "main": "dist/dotie.js",
+  "main": "lib/main.js",
   "license": "MIT",
   "keywords": [
     "dependence",
@@ -15,7 +15,8 @@
     }
   ],
   "scripts": {
-    "test": "jshint . && mocha --compilers js:babel-register ./test/**/*.spec.js"
+    "test": "jshint . && mocha --compilers js:babel-register ./test/**/*.spec.js",
+    "prepublish": "babel src -d lib && gulp"
   },
   "devDependencies": {
     "babel-cli": "6.18.0",

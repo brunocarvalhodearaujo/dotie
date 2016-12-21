@@ -1,7 +1,7 @@
 {
   "name": "dotie",
   "description": "tiny, powerful dependency injection container for node and browser",
-  "main": "dist/main",
+  "main": "dist/main.js",
   "authors": [
     "Bruno Carvalho de Araujo <brunocarvalhodearaujo@gmail.com>"
   ],
@@ -10,12 +10,13 @@
     "dependence",
     "injection"
   ],
-  "homepage": "",
+  "homepage": "https://github.com/brunocarvalhodearaujo/dotie",
   "ignore": [
     "**/.*",
     "node_modules",
     "bower_components",
     "test",
-    "tests"
+    "tests",
+    "lib"
   ]
 }
