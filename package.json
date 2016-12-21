@@ -1,0 +1,35 @@
+{
+  "name": "dotie",
+  "version": "0.0.1",
+  "description": "tiny, powerful dependency injection container for node and browser",
+  "main": "dist/main",
+  "license": "MIT",
+  "keywords": [
+    "dependence",
+    "injection"
+  ],
+  "contributors": [
+    {
+      "name": "Bruno Carvalho de Araujo",
+      "email": "brunocarvalhodearaujo@gmail.com"
+    }
+  ],
+  "scripts": {
+    "test": "jshint --verbose . && mocha --compilers js:babel-register ./test/**/*.spec.js",
+    "start": "babel-node src/main"
+  },
+  "devDependencies": {
+    "babel-cli": "6.18.0",
+    "babel-preset-es2015": "6.18.0",
+    "babelify": "7.3.0",
+    "bower": "1.8.0",
+    "chai": "3.5.0",
+    "gulp": "3.9.1",
+    "gulp-browserify": "0.5.1",
+    "gulp-concat": "2.6.1",
+    "gulp-plumber": "1.1.0",
+    "gulp-uglify": "2.0.0",
+    "jshint": "2.9.4",
+    "mocha": "3.2.0"
+  }
+}

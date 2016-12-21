@@ -1,0 +1,21 @@
+{
+  "name": "dotie",
+  "description": "tiny, powerful dependency injection container for node and browser",
+  "main": "dist/main",
+  "authors": [
+    "Bruno Carvalho de Araujo <brunocarvalhodearaujo@gmail.com>"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "dependence",
+    "injection"
+  ],
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
