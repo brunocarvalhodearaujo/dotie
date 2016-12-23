@@ -98,11 +98,6 @@
         }
         if (typeof window !== "undefined") {
             window.dotie = _injector2.default;
-            if ("$" in window) {
-                window.$.extend = {
-                    watch: _injector2.default
-                };
-            }
         }
         exports.Injector = _injector.Injector;
         exports.default = _injector2.default;
@@ -186,7 +181,7 @@
         }();
         exports.default = new Proxy(new Injector(), {
             get: function get(target, name) {
-                if (!(name in target) && !target.modules.hasOwnProperty(name)) {
+                if (!(name in target) && !target.providers.has(name)) {
                     throw new ReferenceError("Unknown property: " + name);
                 }
                 return name in target ? target[name] : target.resolve(name);
