@@ -1,94 +1,71 @@
 Dotie
 =====
 
-tiny, powerful dependency injection container for node and browser
+tiny, powerful dependency injection container for node and browser inspired on angularJS
 
 ## Instalation
 
 The installation of this package is very simple: In fact, it can be installed by just running:
 
-
 ````bash
 $ npm install dotie # if using NodeJS
-````
-
-````bash
 $ bower install dotie # if you want to use this package in the browser
 ````
 
-* note this package uses a version compiled by [Babel](http://babeljs.io/)
+## Reference
 
-## Usage
+### API
 
-* NodeJS (CommonJS/Browserify)
-
-`````js
-const { Container } = require('dotie') // default style
-import { Container } from 'dotie' // es6 style
-````
-
-* Script tag:
-
-`````html
-<script language="javascript" src="bower_components/dotie/dist/dotie.js"></script>
-`````
-
-# API
-
-create an new dependence into dotie container
-
-````js
-dotie
-  .register('q', () => $.Deferred()) // 
-  .register('http', q => { // or [ 'q', (q) => {} ] if need minify code
-    return (...params) => {
-      $.ajax(params)
-        .done((...data) => q.resolve(data))
-        .error((...error) => q.reject(error))
-      return q.promise()
-    }
-  })
-
-// or use jquery sintax, remember dotie interop window an $ of jquery
+````typescript
+/**
+ * create an new dependency into container
+ * @param {string} name - name of dependency
+ * @param {any} provider - dependence 
+ * @returns {this}
+ */
+dotie.register(name, provider) /* or */ dotie.<name> = provider
 
 /**
- * @description register
- * @param {string} key
- * @param {any} value
+ * find and resolve dependencies and return then
+ * @param {string} name - name of dependency
+ * @returns {any} - registered provider instance
  */
- $.dotie(key, value)
+dotie.resolve(name) /* or */ dotie.<name>
+````
 
-// example
-$.dotie('http', function(q) {
+### Example
+
+````typescript
+
+// small sintax
+dotie.q = () => $.Deferred() // dotie.<name> = dependence
+
+// default sintax
+dotie.register('http', function(q) {
   return (...params) => {
-    ...
-    return q.promise()
+    $.ajax(...params)
+      .success(data => q.resolve(data))
+      .error(error => q.reject(error))
+    return q.promise()    
   }
 })
 
-````
+// using angular injection style (option 1)
+dotie.register('user', ['http', http => {
+  return {
+    find: code => http(`localhost:2650/api/users/${code}`) 
+  }
+}])
 
-retrieve an dependence into an container
+// angular injection style (option 2)
+function controller(model) {
+  user.find(1)
+    .then(user => console.log(user))
+    .catch(error => console.log(error))
+}
 
-````js
-const $http = dotie.resolve('http')
+controller.$inject = [ 'user' ]
 
-$http('https://npmjs.com')
-  .then(data => console.log(data))
-  .error(error => console.log(error))
-
-// or use jquery sintax, remember dotie interop window an $ of jquery
-
-/**
- * @description resolve
- * @param {string} key
- * @returns {any}
- */
- $.dotie(key)
-
-$.dotie('http')('https://npmjs.com')
-  ...
+dotie.register('controller', controller) /* or */ dotie.controller = controller
 
 ````
-
-- this example of register|resolve consider uses browser and jquery

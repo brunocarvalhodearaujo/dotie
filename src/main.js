@@ -1,21 +1,13 @@
-import { Container } from './container'
+import watch, { Injector } from './injector'
 
 if (typeof window !== 'undefined') {
-
-  window.dotie = new Container()
-
-  // create an bridge with jquery
+  window.dotie = watch
+  // create an bridge for jquery
   if ('$' in window) {
-    window.$.dotie = (name, constructor) => {
-      if (constructor) {
-        window.dotie.register(name, constructor)
-      } else {
-        return window.dotie.resolve(name)
-      }
-    }
+    window.$.extend = { watch }
   }
 
 }
 
-export { Container }
-export default Container
+export { Injector }
+export default watch

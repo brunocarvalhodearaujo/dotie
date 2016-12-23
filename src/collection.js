@@ -4,7 +4,7 @@
 export class Collection {
 
   constructor() {
-    this.data = {}
+    this.data = { }
   }
 
   /**

@@ -88,7 +88,33 @@
         Object.defineProperty(exports, "__esModule", {
             value: true
         });
-        exports.Container = undefined;
+        exports.Injector = undefined;
+        var _injector = require("./injector");
+        var _injector2 = _interopRequireDefault(_injector);
+        function _interopRequireDefault(obj) {
+            return obj && obj.__esModule ? obj : {
+                default: obj
+            };
+        }
+        if (typeof window !== "undefined") {
+            window.dotie = _injector2.default;
+            if ("$" in window) {
+                window.$.extend = {
+                    watch: _injector2.default
+                };
+            }
+        }
+        exports.Injector = _injector.Injector;
+        exports.default = _injector2.default;
+    }, {
+        "./injector": 3
+    } ],
+    3: [ function(require, module, exports) {
+        "use strict";
+        Object.defineProperty(exports, "__esModule", {
+            value: true
+        });
+        exports.Injector = undefined;
         var _createClass = function() {
             function defineProperties(target, props) {
                 for (var i = 0; i < props.length; i++) {
@@ -122,55 +148,57 @@
                 throw new TypeError("Cannot call a class as a function");
             }
         }
-        var Container = exports.Container = function() {
-            function Container() {
-                _classCallCheck(this, Container);
-                this.dependencies = new _collection.Collection();
+        var Injector = exports.Injector = function() {
+            function Injector() {
+                _classCallCheck(this, Injector);
+                this.providers = new _collection.Collection();
             }
-            _createClass(Container, [ {
+            _createClass(Injector, [ {
                 key: "register",
-                value: function register(name, constructor) {
-                    if (typeof constructor === "function") {
-                        constructor = [].concat(_toConsumableArray((0, _util.annotate)(constructor)), [ constructor ]);
+                value: function register(name, provider) {
+                    if (this.modules.hasOwnProperty(name)) {
+                        throw new Error(name + " always exist");
                     }
-                    this.dependencies.set(name, constructor);
+                    this.providers.set(name, provider);
+                    return this;
                 }
             }, {
                 key: "resolve",
                 value: function resolve(name) {
                     var _this = this;
-                    if (!this.dependencies.has(name)) {
-                        throw new Error("Can't resolve " + name);
+                    if (!this.providers.has(name)) {
+                        throw new Error("Unknown dependence: " + name);
                     }
-                    if (this.dependencies.typeof(name) !== "array") {
-                        return this.dependencies.get(name);
+                    var provider = this.providers.get(name);
+                    if (this.providers.typeof(name) === "function") {
+                        provider = [].concat(_toConsumableArray(provider.hasOwnProperty("$inject") ? provider.$inject : (0, 
+                        _util.annotate)(provider)), [ provider ]);
                     }
-                    var dependence = this.dependencies.get(name);
-                    return dependence[dependence.length - 1].apply(undefined, dependence.slice(0, -1).map(function(annotation) {
-                        return _this.resolve(annotation);
-                    }));
+                    if (Array.isArray(provider)) {
+                        provider = provider[provider.length - 1].apply(this, provider.slice(0, -1).map(function(annotation) {
+                            return _this.resolve(annotation);
+                        }));
+                    }
+                    return provider;
                 }
             } ]);
-            return Container;
+            return Injector;
         }();
+        exports.default = new Proxy(new Injector(), {
+            get: function get(target, name) {
+                if (!(name in target) && !target.modules.hasOwnProperty(name)) {
+                    throw new ReferenceError("Unknown property: " + name);
+                }
+                return name in target ? target[name] : target.resolve(name);
+            },
+            set: function set(target, prop, value) {
+                target.register(prop, value);
+                return true;
+            }
+        });
     }, {
         "./collection": 1,
         "./util": 4
-    } ],
-    3: [ function(require, module, exports) {
-        "use strict";
-        Object.defineProperty(exports, "__esModule", {
-            value: true
-        });
-        exports.Container = undefined;
-        var _container = require("./container");
-        if (typeof window !== "undefined") {
-            window.dotie = _container.Container;
-        }
-        exports.Container = _container.Container;
-        exports.default = _container.Container;
-    }, {
-        "./container": 2
     } ],
     4: [ function(require, module, exports) {
         "use strict";
@@ -183,4 +211,4 @@
             return (fnText.match(/^([^\(]+?)=>/) || fnText.match(/^[^\(]*\(\s*([^\)]*)\)/m))[1].replace(/ /g, "").split(/,/).filter(Boolean);
         }
     }, {} ]
-}, {}, [ 3 ]);
+}, {}, [ 2 ]);
