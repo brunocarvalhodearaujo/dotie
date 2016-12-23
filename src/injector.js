@@ -50,7 +50,7 @@ export class Injector {
 export default new Proxy(new Injector(), {
 
   get(target, name) {
-    if (!(name in target) && !target.modules.hasOwnProperty(name)) {
+    if (!(name in target) && !target.providers.has(name)) {
       throw new ReferenceError(`Unknown property: ${name}`)
     }
     return (name in target) ? target[name] : target.resolve(name)
