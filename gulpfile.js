@@ -1,8 +1,8 @@
-var pkg = require('./package.json')
-var gulp = require('gulp')
-var browserify = require('gulp-browserify')
-var uglify = require('gulp-uglify')
-var rename = require('gulp-rename')
+const pkg = require('./package.json')
+const gulp = require('gulp')
+const browserify = require('gulp-browserify')
+const uglify = require('gulp-uglify')
+const rename = require('gulp-rename')
 
 gulp.task('build', function () {
   return gulp.src('lib/main.js')
